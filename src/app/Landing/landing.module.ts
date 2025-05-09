@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
 import { LandingComponent } from './landing.component';
+import { RouterModule } from '@angular/router';
 import { landingRoutes } from './landing.routes';
+import { ParallaxComponent } from './parallax/parallax.component';
+
 
 @NgModule({
-  declarations: [LandingComponent],
+  declarations: [
+    LandingComponent,
+    ParallaxComponent
+  ],
   imports: [
-    CommonModule,
     RouterModule.forChild(landingRoutes)
-  ]
+  ],
+  providers: []
 })
 export class LandingModule { }

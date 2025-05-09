@@ -1,0 +1,4 @@
+.parallax-container {
+    @apply static h-screen;
+    background: linear-gradient(to top, #f8b56c, #f6a086 50%, #b28fb8 100%);
+}

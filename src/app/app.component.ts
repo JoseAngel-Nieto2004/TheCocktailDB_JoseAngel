@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  standalone: false
+  standalone: false,
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'TheCocktailDB_DigitalVirgo_Interview';
+  title = 'TheCocktailDBInterview';
 }

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-parallax',
   standalone: false,
   templateUrl: './parallax.component.html',
-  styleUrl: './parallax.component.scss'
+  styleUrl: './parallax.component.css'
 })
 export class ParallaxComponent {
 
