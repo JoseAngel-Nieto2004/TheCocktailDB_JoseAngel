@@ -1,0 +1,137 @@
+<section
+  class="pb-20 max-h-[335vh] flex flex-col items-center bg-linear-to-b from-[#1a2a33] via-[#0f1c24] to-[#081921]"
+>
+  <div class="mt-10 w-1/2">
+    <input
+      type="text"
+      placeholder="Buscar por nombre..."
+      class="w-full p-2 rounded border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      (input)="onSearchByName($event)"
+    />
+  </div>
+
+  <div class="mt-10">
+    <button
+      *ngFor="let letter of alphabet"
+      (click)="loadActiveLetter(letter)"
+      class="px-4 py-2 text-white rounded hover:bg-[#716f6d] focus:outline-none transition duration-300 cursor-pointer"
+      [ngClass]="{
+        'bg-[#716f6d] text-white': letter === activeLetter,
+        'bg-transparent text-gray-300': letter !== activeLetter
+      }"
+    >
+      {{ letter | uppercase }}
+    </button>
+  </div>
+
+  <table class="mx-52 my-10">
+    <thead>
+      <tr class="">
+        <th class="text-2xl text-white w-16">ID</th>
+        <th class="text-2xl text-white w-40">Imagen</th>
+        <th class="text-2xl text-white w-48">Nombre</th>
+        <th class="text-2xl text-white w-48">Categoría</th>
+        <th class="text-2xl text-white w-24">Alcoholica</th>
+        <th class="text-2xl text-white w-40">Ingredientes</th>
+        <th class="text-2xl text-white w-48">F. modificación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let cocktail of paginatedCocktails"
+        class="border-b-2 border-white hover:bg-[#2e4755] duration-300"
+      >
+        <td class="text-white text-lg py-10">{{ cocktail.idDrink }}</td>
+        <td class="py-10 flex justify-center">
+          <img
+            class="rounded-2xl"
+            src="{{ cocktail.strDrinkThumb }}"
+            alt="{{ cocktail?.strDrinkAlternate }}"
+          />
+        </td>
+        <td class="text-white text-lg py-10 text-center">
+          {{ cocktail.strDrink }}
+        </td>
+        <td
+          class="text-white text-lg py-10 text-center"
+          (click)="eventCategory(cocktail)"
+        >
+          <div class="relative">
+            {{ cocktail.strCategory }}
+            <div
+              *ngIf="checkCategoryCondition(cocktail.idDrink)"
+              class="absolute h-80 w-80 bg-white rounded-lg text-black z-50"
+              (click)="$event.stopPropagation()"
+            >
+              <button
+                (click)="closeModalCategory()"
+                class="absolute top-2 right-2 text-black bg-gray-200 rounded-full w-6 h-6 flex items-center justify-center hover:bg-gray-300"
+              >
+                ✕
+              </button>
+              <div class="grid grid-cols-3 gap-2 p-2 h-full overflow-y-auto">
+                <img
+                  *ngFor="let thum of cocktailsByCategory"
+                  src="{{ thum.strDrinkThumb }}"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="text-white text-lg py-10 text-center">
+          {{ cocktail.strAlcoholic === "Alcoholic" ? "Sí" : "No" }}
+        </td>
+        <td
+          class="text-white text-center text-lg py-10"
+          (mouseenter)="opoenModal(cocktail)"
+          (mouseleave)="closeModal()"
+        >
+          <span class="relative">
+            {{ countIngredients(cocktail) }}
+            <div
+              *ngIf="showModal && cocktail.idDrink == drinkId"
+              class="text-black bg-white absolute left-5 top-0 p-5 rounded-lg rounded-tl-none"
+            >
+              <h3 class="align-middle text-2xl font-bold mb-4">Ingredientes</h3>
+              <ul>
+                <li *ngFor="let ingredient of getIngredients(cocktail)">
+                  {{ ingredient }}
+                </li>
+              </ul>
+            </div>
+          </span>
+        </td>
+        <td class="text-white text-lg text-center py-10">
+          {{ cocktail.dateModified | date }}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="text-white text-lg">
+        <td></td>
+        <td class="pt-10">Bebidas Alcoholicas: {{ alcoholicCount }}</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="flex justify-center items-center mt-5">
+    <button
+      (click)="previousPage()"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 mx-1 bg-gray-300 text-black rounded hover:bg-gray-400 disabled:opacity-50"
+    >
+      Anterior
+    </button>
+    <span class="text-white mx-2"
+      >Página {{ currentPage }} de {{ totalPages() }}</span
+    >
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages()"
+      class="px-4 py-2 mx-1 bg-gray-300 text-black rounded hover:bg-gray-400 disabled:opacity-50"
+    >
+      Siguiente
+    </button>
+  </div>
+</section>

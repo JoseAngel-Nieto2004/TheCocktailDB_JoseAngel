@@ -1,3 +1,11 @@
+# 0.1.0
+## Added
+    Se ha añadido la tabla, todavía necesita que se le añadan las funcionalidades de cambiar de página.
+    Se ha añadido variables de entorno para no mostrar información sensible.
+
+## Changed
+    Se ha cambiado configuraciones internas de angular para pode utilizar las variables de entorno.
+
 # 0.0.2
 ## Added 
     En el componente de parallax se ha añadido los elementos gráficos junto al titulo.
