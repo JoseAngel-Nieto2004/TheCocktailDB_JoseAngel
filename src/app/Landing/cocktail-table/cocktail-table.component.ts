@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { CocktailService } from '../../Shared/cocktail.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Ingredient } from '../../models/ingredient.model';
-import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-cocktail-table',

@@ -3,7 +3,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { CocktailService } from '../../Shared/cocktail.service';
 import { Cocktail } from '../../models/cocktail.model';
 import { Ingredient } from '../../models/ingredient.model';
-import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-cocktail-details',

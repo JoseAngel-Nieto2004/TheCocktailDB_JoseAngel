@@ -1,12 +1,13 @@
 {
   "name": "the-cocktail-dbinterview",
-  "version": "0.0.0",
+  "version": "0.2.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "setup": "npm install && npm install tailwindcss @tailwindcss/postcss postcss --force && ng build && ng serve"
   },
   "private": true,
   "dependencies": {

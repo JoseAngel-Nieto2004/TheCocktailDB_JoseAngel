@@ -1,3 +1,10 @@
+# 0.2.1
+## Added
+    Se ha añadido un comando personalizado para arrancar el proyecto.
+
+## Removed
+    Se han eliminado dependencias innecesarias.
+
 # 0.2.0
 ## Added
     Se ha añadido la funcionalidad de páginado en la tabla.
