@@ -9,8 +9,11 @@ import { environment } from '../../environments/environment';
 })
 export class ApiService {
   readonly MAIN_PATH = environment.apiUrl;
+  readonly INGREDIENT_THUMB_URL = environment.ingredientThumbUrl;
 
   constructor(private http: HttpClient) {}
+
+  // LLAMADAS A LA API
 
   public get(path: string, params?: HttpParams) {
 
@@ -27,5 +30,11 @@ export class ApiService {
 
   public put(path: string, body: any): Observable<any> {
     return this.http.put(this.MAIN_PATH + path, body);
+  }
+
+  // LLAMADAS A LAS FOTOS DE INGREDIENTES
+
+  public getIngredientThumbUrl(ingredient: string): string {
+    return `${this.INGREDIENT_THUMB_URL}${ingredient}-small.png`;
   }
 }

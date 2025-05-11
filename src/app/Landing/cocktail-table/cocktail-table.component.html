@@ -1,11 +1,19 @@
 <section
-  class="pb-20 max-h-[335vh] flex flex-col items-center bg-linear-to-b from-[#1a2a33] via-[#0f1c24] to-[#081921]"
+  class="pb-20 max-h-[335vh] flex flex-col items-center overflow-hidden"
 >
-  <div class="mt-10 w-1/2">
+  <div class="flex justify-center w-full p-10">
+    <button
+      class="bg-[#50c2a9] hover:bg-[#3ab89b] text-black font-semibold px-4 py-2 rounded-xl shadow-md cursor-pointer"
+      (click)="getRandomCocktail()"
+    >
+      Sorprendeme 🎲
+    </button>
+  </div>
+  <div class="mt-5 flex justify-center gap-5 w-1/2">
     <input
       type="text"
       placeholder="Buscar por nombre..."
-      class="w-full p-2 rounded border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="bg-[#1e3c3e] text-white placeholder-gray-400 px-4 py-2 rounded-xl border border-[#2d5c5f] focus:ring-2 focus:ring-[#50c2a9] transition duration-200"
       (input)="onSearchByName($event)"
     />
   </div>
@@ -14,112 +22,149 @@
     <button
       *ngFor="let letter of alphabet"
       (click)="loadActiveLetter(letter)"
-      class="px-4 py-2 text-white rounded hover:bg-[#716f6d] focus:outline-none transition duration-300 cursor-pointer"
+      class="px-4 py-2 rounded hover:text-[#50c2a9] focus:outline-none transition duration-300 cursor-pointer"
       [ngClass]="{
-        'bg-[#716f6d] text-white': letter === activeLetter,
-        'bg-transparent text-gray-300': letter !== activeLetter
+        'text-[#50c2a9]': letter === activeLetter,
+        'bg-transparent text-white': letter !== activeLetter
       }"
     >
       {{ letter | uppercase }}
     </button>
   </div>
 
-  <table class="mx-52 my-10">
-    <thead>
-      <tr class="">
-        <th class="text-2xl text-white w-16">ID</th>
-        <th class="text-2xl text-white w-40">Imagen</th>
-        <th class="text-2xl text-white w-48">Nombre</th>
-        <th class="text-2xl text-white w-48">Categoría</th>
-        <th class="text-2xl text-white w-24">Alcoholica</th>
-        <th class="text-2xl text-white w-40">Ingredientes</th>
-        <th class="text-2xl text-white w-48">F. modificación</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let cocktail of paginatedCocktails"
-        class="border-b-2 border-white hover:bg-[#2e4755] duration-300"
-      >
-        <td class="text-white text-lg py-10">{{ cocktail.idDrink }}</td>
-        <td class="py-10 flex justify-center">
-          <img
-            class="rounded-2xl"
-            src="{{ cocktail.strDrinkThumb }}"
-            alt="{{ cocktail?.strDrinkAlternate }}"
-          />
-        </td>
-        <td class="text-white text-lg py-10 text-center">
-          {{ cocktail.strDrink }}
-        </td>
-        <td
-          class="text-white text-lg py-10 text-center"
-          (click)="eventCategory(cocktail)"
+  <div class="py-10">
+    <table class="min-w-full table-auto text-white">
+      <thead class="bg-gradient-to-r from-[#2c4a4e] to-[#3a6a6f] text-xl">
+        <tr>
+          <th class="text-white p-5 pl-6">ID</th>
+          <th class="text-white p-5">Imagen</th>
+          <th class="text-white p-5">Nombre</th>
+          <th class="text-white p-5">Categoría</th>
+          <th class="text-white p-5">Alcoholica</th>
+          <th class="text-white p-5">Ingredientes</th>
+          <th class="text-white p-5">F. modificación</th>
+        </tr>
+      </thead>
+      <tbody class="">
+        <tr
+          *ngFor="let cocktail of paginatedCocktails"
+          class="border-b border-[#3a5456] hover:bg-[#3b5f63] even:bg-[#1f3336] odd:bg-[#253b3f] duration-300"
         >
-          <div class="relative">
-            {{ cocktail.strCategory }}
-            <div
-              *ngIf="checkCategoryCondition(cocktail.idDrink)"
-              class="absolute h-80 w-80 bg-white rounded-lg text-black z-50"
-              (click)="$event.stopPropagation()"
-            >
-              <button
-                (click)="closeModalCategory()"
-                class="absolute top-2 right-2 text-black bg-gray-200 rounded-full w-6 h-6 flex items-center justify-center hover:bg-gray-300"
+          <td
+            class="text-white text-lg py-10 cursor-pointer text-center"
+            (click)="goToCocktailDetails(cocktail)"
+          >
+            {{ cocktail.idDrink }}
+          </td>
+          <td class="py-10 flex justify-center">
+            <img
+              class="rounded-2xl w-20 h-20 object-cover"
+              src="{{ cocktail.strDrinkThumb }}"
+              alt="{{ cocktail?.strDrinkAlternate }}"
+            />
+          </td>
+          <td class="text-white text-lg py-10 text-center">
+            {{ cocktail.strDrink }}
+          </td>
+          <td
+            class="text-white text-lg py-10 text-center cursor-pointer"
+            (click)="eventCategory(cocktail)"
+          >
+            <div class="relative">
+              {{ cocktail.strCategory }}
+              <div
+                *ngIf="checkCategoryCondition(cocktail.idDrink)"
+                class="absolute h-80 w-80 bg-white rounded-lg cursor-auto text-black z-50"
+                (click)="$event.stopPropagation()"
               >
-                ✕
-              </button>
-              <div class="grid grid-cols-3 gap-2 p-2 h-full overflow-y-auto">
-                <img
-                  *ngFor="let thum of cocktailsByCategory"
-                  src="{{ thum.strDrinkThumb }}"
-                  alt=""
-                />
+                <button
+                  (click)="closeModalCategory()"
+                  class="absolute top-2 right-2 cursor-pointer text-black bg-gray-200 rounded-full w-6 h-6 flex items-center justify-center hover:bg-gray-300"
+                >
+                  ✕
+                </button>
+                <div class="grid grid-cols-3 gap-2 p-2 h-full overflow-y-auto">
+                  <img
+                    class="cursor-pointer"
+                    (click)="goToCocktailDetails(thum)"
+                    *ngFor="let thum of cocktailsByCategory"
+                    src="{{ thum.strDrinkThumb }}"
+                    alt="{{ thum.strDrink }}"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-        <td class="text-white text-lg py-10 text-center">
-          {{ cocktail.strAlcoholic === "Alcoholic" ? "Sí" : "No" }}
-        </td>
-        <td
-          class="text-white text-center text-lg py-10"
-          (mouseenter)="opoenModal(cocktail)"
-          (mouseleave)="closeModal()"
-        >
-          <span class="relative">
-            {{ countIngredients(cocktail) }}
-            <div
-              *ngIf="showModal && cocktail.idDrink == drinkId"
-              class="text-black bg-white absolute left-5 top-0 p-5 rounded-lg rounded-tl-none"
-            >
-              <h3 class="align-middle text-2xl font-bold mb-4">Ingredientes</h3>
-              <ul>
-                <li *ngFor="let ingredient of getIngredients(cocktail)">
-                  {{ ingredient }}
-                </li>
-              </ul>
-            </div>
-          </span>
-        </td>
-        <td class="text-white text-lg text-center py-10">
-          {{ cocktail.dateModified | date }}
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr class="text-white text-lg">
-        <td></td>
-        <td class="pt-10">Bebidas Alcoholicas: {{ alcoholicCount }}</td>
-      </tr>
-    </tfoot>
-  </table>
+          </td>
+          <td class="text-white text-lg py-10 text-center">
+            {{ cocktail.strAlcoholic === "Alcoholic" ? "Sí" : "No" }}
+          </td>
+          <td
+            class="text-white text-center text-lg py-10"
+            (mouseenter)="opoenModal(cocktail)"
+            (mouseleave)="closeModal()"
+          >
+            <span class="relative">
+              {{ countIngredients(cocktail) }}
+              <div
+                *ngIf="showModal && cocktail.idDrink == drinkId"
+                class="text-black bg-white absolute left-5 top-0 w-max p-5 rounded-lg rounded-tl-none shadow-lg"
+                #tooltip
+              >
+                <h3 class="align-middle text-3xl font-bold font-dancing mb-4">
+                  Ingredientes
+                </h3>
+                <ng-container *ngIf="getIngredients(cocktail) as ingredients">
+                  <div class="grid grid-cols-2 gap-4 w-full">
+                    <div>
+                      <ul>
+                        <li
+                          *ngFor="let ingredient of ingredients"
+                          class="whitespace-nowrap text-left"
+                        >
+                          {{ ingredient.name }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <ul>
+                        <li
+                          *ngFor="let ingredient of ingredients"
+                          class="whitespace-nowrap text-left w-fit"
+                        >
+                          {{ ingredient.measure }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4 w-full">
+                    <img
+                      *ngFor="let ingredient of ingredients"
+                      src="{{ ingredient.strThumb }}"
+                      alt=""
+                    />
+                  </div>
+                </ng-container>
+              </div>
+            </span>
+          </td>
+          <td class="text-white font-dancing text-lg text-center py-10">
+            {{ cocktail.dateModified | date }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      class="mt-5 w-1/4 text-center bg-[#1e3c3e] text-gray-200 px-4 py-2 rounded-xl border border-[#2d5c5f] focus:ring-2 focus:ring-[#50c2a9] transition duration-200"
+    >
+      <p>Bebidas Alcoholicas: {{ alcoholicCount }}</p>
+    </div>
+  </div>
 
   <div class="flex justify-center items-center mt-5">
     <button
       (click)="previousPage()"
       [disabled]="currentPage === 1"
-      class="px-4 py-2 mx-1 bg-gray-300 text-black rounded hover:bg-gray-400 disabled:opacity-50"
+      class="px-4 py-2 mx-1 bg-[#50c2a9] text-black rounded hover:bg-[#89d3c2] disabled:opacity-50 disabled:cursor-not-allowed"
     >
       Anterior
     </button>
@@ -129,7 +174,7 @@
     <button
       (click)="nextPage()"
       [disabled]="currentPage === totalPages()"
-      class="px-4 py-2 mx-1 bg-gray-300 text-black rounded hover:bg-gray-400 disabled:opacity-50"
+      class="px-4 py-2 mx-1 bg-[#50c2a9] text-black rounded hover:bg-[#89d3c2] disabled:opacity-50 disabled:cursor-not-allowed"
     >
       Siguiente
     </button>

@@ -1,3 +1,18 @@
+# 0.2.0
+## Added
+    Se ha añadido la funcionalidad de páginado en la tabla.
+    Se ha añadido la pagina de detalles.
+    Se ha añadido una nueva ruta para obtener las imágenes de los ingredientes.
+    Se han añadido los JavaDocs que faltaban en las funciones de la anterior versión.
+    Se ha añadido lógica para mostrar siempre el tooltip de los ingredientes en pantalla.
+    Se ha añadido el DAO de Ingredientes para mejorar el manejo de datos.
+
+## Changed
+    Se ha modificadoo el diseño de la tabla para que sea más amigable.
+    Se ha modificado el diseño del componente para que sea más coherente.
+    Se ha movido la las llamadas de servicio para mejorar la consistencia y claridad.
+    Se ha cambaido el comportamiento del scroll al cambiar de página.
+
 # 0.1.0
 ## Added
     Se ha añadido la tabla, todavía necesita que se le añadan las funcionalidades de cambiar de página.

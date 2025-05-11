@@ -50,4 +50,5 @@ export interface Cocktail {
   strMeasure15: string | null;
   strTags: string | null;
   strVideo: string | null;
+  [key: string]: any;
 }
